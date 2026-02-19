@@ -1,10 +1,10 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
 
     "name": "Typio Form Recovery",
     "short_name": "Typio",
     "description": "Autosave, everywhere. Recover lost form input with ease!",
-    "version": "3.3.0",
+    "version": "3.3.1",
     "icons": {
         "16": "img/icon16.png",
         "48": "img/icon48.png",
@@ -13,20 +13,23 @@
 
     "permissions": [
         "tabs",
-        "<all_urls>",
         "storage",
         "contextMenus",
         "unlimitedStorage",
-        "idle"
+        "idle",
+        "activeTab"
     ],
 
     "optional_permissions": [
         "downloads"
     ],
 
+    "host_permissions":[
+        "<all_urls>"
+    ],
+
     "background": {
-        "scripts": ["js/background.js"],
-        "persistent": true
+        "service_worker": "js/background.js"
     },
 
     "content_scripts": [
@@ -47,27 +50,33 @@
     ],
 
     "web_accessible_resources": [
-        "img/*",
-        "css/*.css",
-        "fonts/*",
-        "templates/*",
-        "html/app.html",
-        "js/content.frameInjector.js",
-        "js/*.js.map"
+        {
+            "resources": [
+                "img/*",
+                "css/*.css",
+                "fonts/*",
+                "templates/*",
+                "html/app.html",
+                "js/content.frameInjector.js",
+                "js/*.js.map"
+            ],
+            "matches":[
+                "<all_urls>"
+            ]
+        }
     ],
 
-    "options_ui" : {
-        "page": "html/app.html",
-        "chrome_style": true,
-        "open_in_tab": true
-    },
-
-    "browser_action": {
+    "action": {
         "default_icon": {
             "16": "img/icon16.png",
             "38": "img/icon38.png"
         },
         "default_title": "Typio Form recovery",
         "default_popup": "html/popup.html"
+    },
+
+    "options_ui" : {
+        "page": "html/app.html",
+        "open_in_tab": true
     }
 }
